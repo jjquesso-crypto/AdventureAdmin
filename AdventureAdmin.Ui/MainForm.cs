@@ -105,4 +105,10 @@ public partial class MainForm : Form
     {
 
     }
+
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+
+    }
 }
+// cree la rama creditcard

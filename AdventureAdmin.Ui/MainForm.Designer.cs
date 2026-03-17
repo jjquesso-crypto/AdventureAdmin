@@ -203,9 +203,10 @@ partial class MainForm
         Controls.Add(mainMenuStrip);
         IsMdiContainer = true;
         MainMenuStrip = mainMenuStrip;
-        Margin = new Padding(4, 4, 4, 4);
+        Margin = new Padding(4);
         Name = "MainForm";
         Text = "Main Form";
+        Load += MainForm_Load;
         mainMenuStrip.ResumeLayout(false);
         mainMenuStrip.PerformLayout();
         ResumeLayout(false);
