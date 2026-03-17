@@ -1,17 +1,18 @@
 ﻿using AdventureAdmin.Data.Context;
 using AdventureAdmin.Data.Models;
+using AdventureAdmin.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdventureAdmin.Ui.Product;
 
 public partial class ProductDescriptionForm : Form
 {
-    private readonly AdventureWorksContext _context;
+    private readonly ProductDescriptionService _service;
 
     public ProductDescriptionForm(AdventureWorksContext context)
     {
         InitializeComponent();
-        _context = context;
+        _service = new ProductDescriptionService(context);
     }
 
     private void ProductDescriptionForm_Load(object sender, EventArgs e)
@@ -34,8 +35,7 @@ public partial class ProductDescriptionForm : Form
                 ModifiedDate = DateTime.Now
             };
 
-            _context.ProductDescriptions.Add(productDescription);
-            await _context.SaveChangesAsync();
+            await _service.CreateAsync(txtDescription.Text);
 
             MessageBox.Show("Descripción de producto creada correctamente.", "Éxito",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);

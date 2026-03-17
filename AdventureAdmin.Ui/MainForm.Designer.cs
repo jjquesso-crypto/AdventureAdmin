@@ -181,7 +181,7 @@ partial class MainForm
     private ToolStripMenuItem productDescriptionToolStripMenuItem;
     private ToolStripMenuItem addressTypeToolStripMenuItem;
     private ToolStripMenuItem businessEntityToolStripMenuItem;
-    private ToolStripMenuItem locationToolStripMenuItem;
+    private ToolStripMenuItem locationToolStripMenuItem; 
     private ToolStripMenuItem specialOfferToolStripMenuItem;
     private ToolStripMenuItem productCategoryToolStripMenuItem;
     private ToolStripMenuItem cultureToolStripMenuItem;

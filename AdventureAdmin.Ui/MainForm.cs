@@ -1,3 +1,4 @@
+using AdventureAdmin.Ui.Location;
 using AdventureAdmin.Ui.Product;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -64,7 +65,8 @@ public partial class MainForm : Form
 
     private void locationToolStripMenuItem_Click(object sender, EventArgs e)
     {
-
+        var locationList = Program.ServiceProvider.GetRequiredService<LocationList>();
+        locationList.Show();
     }
 
     private void specialOfferToolStripMenuItem_Click(object sender, EventArgs e)

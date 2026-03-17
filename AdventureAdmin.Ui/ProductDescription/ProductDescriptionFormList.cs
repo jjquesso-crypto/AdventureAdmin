@@ -45,4 +45,9 @@ public partial class ProductDescriptionList : Form
     {
         LoadDataAsync();
     }
+
+    private void productDescriptionDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
+    }
 }
