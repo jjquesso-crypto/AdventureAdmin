@@ -1,5 +1,5 @@
 using AdventureAdmin.Data.Context;
-using AdventureAdmin.Ui.Person;
+using AdventureAdmin.Ui.Location;
 using AdventureAdmin.Ui.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,12 +33,18 @@ static class Program
             .ConnectionStrings["AdventureWorks"].ConnectionString;
 
         services.AddDbContext<AdventureWorksContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(connectionString, sqlServerOptionsAction: sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure();
+            }));
 
         services.AddTransient<MainForm>();
         services.AddTransient<ProductList>();
         services.AddTransient<ProductForm>();
-        services.AddTransient<PersonList>();
-        services.AddTransient<PersonForm>();
+        services.AddTransient<LocationList>();
+        services.AddTransient<LocationForm>();
+        services.AddTransient<ProductDescriptionList>();
+        services.AddTransient<ProductDescriptionForm>();
     }
 }
+
