@@ -11,6 +11,9 @@ partial class ProductDescriptionForm
     private Panel panelButtons;
     private TableLayoutPanel layout;
 
+
+
+
     protected override void Dispose(bool disposing)
     {
         if (disposing && (components != null)) components.Dispose();
