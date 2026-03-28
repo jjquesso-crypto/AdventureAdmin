@@ -6,9 +6,9 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class ProductService : IService<Data.Models.Product, int>
+public class LocationService : IService<Data.Models.Location, int>
 {
-    public Task<Data.Models.Product?> Buscar(int id)
+    public Task<Data.Models.Location?> Buscar(int id)
     {
         throw new NotImplementedException();
     }
@@ -18,12 +18,12 @@ public class ProductService : IService<Data.Models.Product, int>
         throw new NotImplementedException();
     }
 
-    public Task<List<Data.Models.Product>> GetList(Expression<Func<Data.Models.Product, bool>> criterio)
+    public Task<List<Data.Models.Location>> GetList(Expression<Func<Data.Models.Location, bool>> criterio)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> Guardar(Data.Models.Product entidad)
+    public Task<bool> Guardar(Data.Models.Location entidad)
     {
         throw new NotImplementedException();
     }
