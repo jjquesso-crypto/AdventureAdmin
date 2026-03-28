@@ -1,80 +1,86 @@
-﻿using AdventureAdmin.Data.Context;
+﻿using System;
+using System.Windows.Forms;
 using AdventureAdmin.Data.Models;
-using Microsoft.EntityFrameworkCore;
+using AdventureAdmin.Ui.Services;
 
-namespace AdventureAdmin.Ui.Product;
-
-public partial class ProductDescriptionForm : Form
+namespace AdventureAdmin.Ui.Product
 {
-    private readonly AdventureWorksContext _context;
-
-    public ProductDescriptionForm(AdventureWorksContext context)
+    public partial class ProductDescriptionForm : Form
     {
-        InitializeComponent();
-        _context = context;
-    }
+        private readonly ProductDescriptionServices _productDescriptionServices;
 
-    private void ProductDescriptionForm_Load(object sender, EventArgs e)
-    {
-
-    }
-
-    private async void btnSave_Click(object sender, EventArgs e)
-    {
-        if (!ValidateForm()) return;
-
-        try
+        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices)
         {
-            btnSave.Enabled = false;
+            InitializeComponent();
+            _productDescriptionServices = productDescriptionServices;
+        }
 
-            var productDescription = new ProductDescription
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            errorProvider.Clear();
+
+            if (!ValidateForm()) return;
+
+            try
             {
-                Description = txtDescription.Text.Trim(),
-                Rowguid = Guid.NewGuid(),
-                ModifiedDate = DateTime.Now
-            };
+                btnSave.Enabled = false;
 
-            _context.ProductDescriptions.Add(productDescription);
-            await _context.SaveChangesAsync();
+                var productDescription = new ProductDescription
+                {
+                    Description = txtDescription.Text.Trim(),
+                    Rowguid = Guid.NewGuid(),
+                    ModifiedDate = DateTime.Now
+                };
 
-            MessageBox.Show("Descripción de producto creada correctamente.", "Éxito",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var paso = await _productDescriptionServices.Guardar(productDescription);
 
+                if (!paso)
+                {
+                    MessageBox.Show("Error al guardar", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                MessageBox.Show("Descripción de producto creada correctamente.", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnSave.Enabled = true;
+            }
+        }
+
+        private bool ValidateForm()
+        {
+            errorProvider.Clear();
+            bool valid = true;
+
+            if (string.IsNullOrWhiteSpace(txtDescription.Text))
+            {
+                errorProvider.SetError(txtDescription, "La descripción es obligatoria.");
+                valid = false;
+            }
+
+            if (txtDescription.Text.Length > 400)
+            {
+                errorProvider.SetError(txtDescription, "Máximo 400 caracteres.");
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error al guardar: {ex.Message}", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-        finally
-        {
-            btnSave.Enabled = true;
-        }
-    }
-
-    private bool ValidateForm()
-    {
-        errorProvider.Clear();
-        bool valid = true;
-
-        if (string.IsNullOrWhiteSpace(txtDescription.Text))
-        {
-            errorProvider.SetError(txtDescription, "La descripción es obligatoria.");
-            valid = false;
-        }
-
-        if (txtDescription.Text.Length > 400)
-        {
-            errorProvider.SetError(txtDescription, "La descripción no puede exceder los 400 caracteres.");
-            valid = false;
-        }
-
-        return valid;
-    }
-
-    private void btnCancel_Click(object sender, EventArgs e)
-    {
-        this.Close();
     }
 }
