@@ -1,5 +1,7 @@
-﻿using AdventureAdmin.Data.Models;
+﻿using AdventureAdmin.Data.Context;
+using AdventureAdmin.Data.Models;
 using Aplicada1.Core;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,7 +9,7 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class CultureService : IService<Data.Models.Culture, int>
+public class CultureService(AdventureWorksContext context) : IService<Data.Models.Culture, int>
 {
     public Task<Culture?> Buscar(int id)
     {
@@ -19,9 +21,11 @@ public class CultureService : IService<Data.Models.Culture, int>
         throw new NotImplementedException();
     }
 
-    public Task<List<Culture>> GetList(Expression<Func<Culture, bool>> criterio)
+    public async Task<List<Culture>> GetList(Expression<Func<Culture, bool>> criterio)
     {
-        throw new NotImplementedException();
+        return await context.Cultures.Where(criterio)
+            .ToListAsync();
+
     }
 
     public Task<bool> Guardar(Culture entidad)

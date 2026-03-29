@@ -1,4 +1,6 @@
-﻿using AdventureAdmin.Data.Models;
+﻿using AdventureAdmin.Data.Context;
+using AdventureAdmin.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class ProductDescriptionServices : Aplicada1.Core.IService<ProductDescription, int>
+public class ProductDescriptionServices(AdventureWorksContext context) : Aplicada1.Core.IService<ProductDescription, int>
 {
     public Task<ProductDescription?> Buscar(int id)
     {
@@ -18,9 +20,11 @@ public class ProductDescriptionServices : Aplicada1.Core.IService<ProductDescrip
         throw new NotImplementedException();
     }
 
-    public Task<List<ProductDescription>> GetList(Expression<Func<ProductDescription, bool>> criterio)
+    public async Task<List<ProductDescription>> GetList(Expression<Func<ProductDescription, bool>> criterio)
     {
-        throw new NotImplementedException();
+        return await context.ProductDescriptions.Where(criterio)
+         .ToListAsync();
+
     }
 
     public Task<bool> Guardar(ProductDescription entidad)
