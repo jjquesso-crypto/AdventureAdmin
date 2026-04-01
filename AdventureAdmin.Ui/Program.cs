@@ -1,17 +1,24 @@
 using AdventureAdmin.Data.Context;
+using AdventureAdmin.Ui;
 using AdventureAdmin.Ui.CreditCard;
-using AdventureAdmin.Ui.Location;
-using AdventureAdmin.Ui.Product;
 using AdventureAdmin.Ui.Department;
+using AdventureAdmin.Ui.Location;
+using AdventureAdmin.Ui.Person;
+using AdventureAdmin.Ui.Product;
+using AdventureAdmin.Ui.ProductCategory;
+using AdventureAdmin.Ui.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
-using AdventureAdmin.Ui;
+using Aplicada1.Core;
+
 
 namespace AdventureAdmin;
 
 static class Program
 {
+
+// Para probar el commit
     public static ServiceProvider ServiceProvider { get; private set; }
     /// <summary>
     ///  The main entry point for the application.
@@ -52,6 +59,29 @@ static class Program
         services.AddTransient<DepartmentForm>();
         services.AddTransient<ProductDescriptionList>();
         services.AddTransient<ProductDescriptionForm>();
+        services.AddTransient<PersonList>();
+        services.AddTransient<PersonForm>();
+        services.AddTransient<ProductCategoryList>();
+        services.AddTransient<ProductCategoryForm>();
+      
+        //Services 
+        services.AddTransient<CreditCardService>();
+        services.AddTransient<ProductCategoryService>();
+        services.AddTransient<DepartmentService>();
+        services.AddTransient<CurrencyService>();
+        services.AddTransient<ShiftService>();
+        services.AddTransient<CountryRegionService>();
+        services.AddTransient<ShipMethodService>();
+        services.AddTransient<PhoneNumberTypeService>();
+        services.AddTransient<ProductDescriptionService>();
+        services.AddTransient<AddressTypeService>();
+        services.AddTransient<BusinessEntityService>();
+        services.AddTransient<LocationService>();
+        services.AddTransient<SpecialOfferService>();
+        services.AddTransient<CultureService>();
+        services.AddTransient<PersonService>();
+        services.AddTransient<ContactTypeService>();
+        services.AddTransient<ScrapReasonService>();
     }
 }
 

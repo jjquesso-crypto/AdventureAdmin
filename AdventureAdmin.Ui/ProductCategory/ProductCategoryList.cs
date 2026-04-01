@@ -1,21 +1,21 @@
-﻿using AdventureAdmin.Data.Context;
+using AdventureAdmin.Data.Context;
 using AdventureAdmin.Ui.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AdventureAdmin.Ui.CreditCard
+namespace AdventureAdmin.Ui.ProductCategory
 {
-    public partial class CreditCardList : Form
+    public partial class ProductCategoryList : Form
     {
-        private readonly CreditCardService _creditCardService;
+        private readonly ProductCategoryService _productCategoryService;
 
-        public CreditCardList(CreditCardService creditCardService)
+        public ProductCategoryList(ProductCategoryService productCategoryService)
         {
             InitializeComponent();
-            _creditCardService = creditCardService;
+            _productCategoryService = productCategoryService;
         }
 
-        private void CreditCardList_Load(object sender, EventArgs e)
+        private void ProductCategoryList_Load(object sender, EventArgs e)
         {
             RefrescarDatos();
         }
@@ -24,11 +24,10 @@ namespace AdventureAdmin.Ui.CreditCard
         {
             try
             {
-                var tarjetas = await _creditCardService.GetList(c => true);
-                dgvCards.DataSource = tarjetas;
+                var categorias = await _productCategoryService.GetList(c => true);
+                dgvCategorias.DataSource = categorias;
 
-                if (dgvCards.Columns["SalesOrderHeaders"] != null) dgvCards.Columns["SalesOrderHeaders"].Visible = false;
-                if (dgvCards.Columns["PersonCreditCards"] != null) dgvCards.Columns["PersonCreditCards"].Visible = false;
+                if (dgvCategorias.Columns["ProductSubcategories"] != null) dgvCategorias.Columns["ProductSubcategories"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -38,7 +37,7 @@ namespace AdventureAdmin.Ui.CreditCard
 
         private async void nuevoButton_Click(object sender, EventArgs e)
         {
-            var form = Program.ServiceProvider.GetRequiredService<CreditCardForm>();
+            var form = Program.ServiceProvider.GetRequiredService<ProductCategoryForm>();
 
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -49,7 +48,6 @@ namespace AdventureAdmin.Ui.CreditCard
         private async void refrescarButton_Click(object sender, EventArgs e)
         {
             await RefrescarDatos();
-
         }
     }
 }

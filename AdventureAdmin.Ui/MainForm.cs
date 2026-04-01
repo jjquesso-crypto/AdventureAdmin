@@ -2,6 +2,7 @@ using AdventureAdmin.Ui.Department;
 using AdventureAdmin.Ui.CreditCard;
 using AdventureAdmin.Ui.Location;
 using AdventureAdmin.Ui.Product;
+using AdventureAdmin.Ui.ProductCategory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdventureAdmin;
@@ -79,7 +80,9 @@ public partial class MainForm : Form
 
     private void productCategoryToolStripMenuItem_Click(object sender, EventArgs e)
     {
-
+        var form = Program.ServiceProvider.GetRequiredService<ProductCategoryList>();
+        form.MdiParent = this;
+        form.Show();
     }
 
     private void cultureToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,8 +92,8 @@ public partial class MainForm : Form
 
     private void personToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var personForm = Program.ServiceProvider.GetRequiredService<AdventureAdmin.Ui.Person.PersonForm>();
-        personForm.Show();
+        var personList = Program.ServiceProvider.GetRequiredService<AdventureAdmin.Ui.Person.PersonList>();
+        personList.Show();
     }
 
     private void creditCardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,6 +116,11 @@ public partial class MainForm : Form
     }
 
     private void MainForm_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    private void opcionesToolStripMenuItem_Click(object sender, EventArgs e)
     {
 
     }

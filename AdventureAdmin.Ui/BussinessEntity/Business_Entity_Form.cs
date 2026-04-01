@@ -6,21 +6,18 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace AdventureAdmin.Ui.Culture
+namespace AdventureAdmin.Ui.Business_Entity
 {
-    public partial class CultureForm : Form
+    public partial class  Business_Entity_Form : Form
     {
-        public CultureForm()
+        public Business_Entity_Form()
         {
             InitializeComponent();
         }
-<<<<<<< issue/16_culture
-=======
 
-        private void CultureForm_Load(object sender, EventArgs e)
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
->>>>>>> master
     }
 }
