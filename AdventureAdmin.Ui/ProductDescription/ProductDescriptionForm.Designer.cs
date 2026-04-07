@@ -101,14 +101,14 @@ partial class ProductDescriptionForm
         ClientSize = new Size(596, 239);
         Controls.Add(layout);
         Controls.Add(panelButtons);
-        FormBorderStyle = FormBorderStyle.FixedDialog;
+        FormBorderStyle = FormBorderStyle.FixedDialog;                                                                                                                                                           
         Margin = new Padding(3, 2, 3, 2);
         MaximizeBox = false;
         MinimizeBox = false;
         Name = "ProductDescriptionForm";
         StartPosition = FormStartPosition.CenterParent;
         Text = "Agregar Descripción de Producto";
-        Load += ProductDescriptionForm_Load;
+        //Load += ProductDescriptionForm_Load;
         ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
         layout.ResumeLayout(false);
         layout.PerformLayout();

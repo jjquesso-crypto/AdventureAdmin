@@ -27,8 +27,30 @@ public class ProductDescriptionServices(AdventureWorksContext context) : Aplicad
 
     }
 
-    public Task<bool> Guardar(ProductDescription entidad)
+    public async Task<bool> Insertar(ProductDescription entidad)
     {
-        throw new NotImplementedException();
+        entidad.Rowguid = Guid.NewGuid();
+        entidad.ModifiedDate = DateTime.Now;
+        await context.ProductDescriptions.AddAsync(entidad);
+        return await context.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> Guardar(ProductDescription entidad)
+    {
+        if (entidad.ProductDescriptionId == 0)
+            return await Insertar(entidad);
+        else
+            return await Modificar(entidad);
+    }
+    public async Task<bool> Modificar(ProductDescription entidad)
+    {
+        entidad.ModifiedDate = DateTime.Now;
+        context.ProductDescriptions.Update(entidad);
+        return await context.SaveChangesAsync() > 0;
+    }
+    private async Task<bool> Existe(int id)
+    {
+        return await context.ProductDescriptions
+            .AnyAsync(p => p.ProductDescriptionId == id);
     }
 }

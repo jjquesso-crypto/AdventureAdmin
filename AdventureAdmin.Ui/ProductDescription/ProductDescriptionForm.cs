@@ -11,6 +11,7 @@ namespace AdventureAdmin.Ui.Product
         private readonly ProductDescription? _productDescription;
 
         public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices) : this(productDescriptionServices, null) { }
+
         public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices, ProductDescription? productDescription)
         {
             InitializeComponent();
@@ -30,11 +31,13 @@ namespace AdventureAdmin.Ui.Product
         private async Task Actualizar()
         {
             var entidad = await _productDescriptionServices
-                .Buscar(_productDescription.ProductDescriptionID);
+                .Buscar(_productDescription.ProductDescriptionId);
 
-            AplicarCampos(entidad);
-
-            await _productDescriptionServices.Actualizar(entidad);
+            if (entidad != null)
+            {
+                AplicarCampos(entidad);
+                await _productDescriptionServices.Modificar(entidad);
+            }
         }
 
         private async Task Insertar()
@@ -53,42 +56,22 @@ namespace AdventureAdmin.Ui.Product
         {
             errorProvider.Clear();
 
-            if (_productDescription == null)
-                await Insertar();
-            else
-                await Actualizar();
-
-            DialogResult = DialogResult.OK;
-            Close();
-
-
             if (!ValidateForm()) return;
 
             try
             {
                 btnSave.Enabled = false;
 
-                var productDescription = new ProductDescription
-                {
-                    Description = txtDescription.Text.Trim(),
-                    Rowguid = Guid.NewGuid(),
-                    ModifiedDate = DateTime.Now
-                };
+                if (_productDescription == null)
+                    await Insertar();
+                else
+                    await Actualizar();
 
-                var paso = await _productDescriptionServices.Guardar(productDescription);
-
-                if (!paso)
-                {
-                    MessageBox.Show("Error al guardar", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                MessageBox.Show("Descripción de producto creada correctamente.", "Éxito",
+                MessageBox.Show("Descripción de producto guardada correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception ex)
             {
@@ -111,8 +94,7 @@ namespace AdventureAdmin.Ui.Product
                 errorProvider.SetError(txtDescription, "La descripción es obligatoria.");
                 valid = false;
             }
-
-            if (txtDescription.Text.Length > 400)
+            else if (txtDescription.Text.Length > 400)
             {
                 errorProvider.SetError(txtDescription, "Máximo 400 caracteres.");
                 valid = false;
@@ -123,7 +105,8 @@ namespace AdventureAdmin.Ui.Product
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void CargarDatos(ProductDescription e)
