@@ -21,6 +21,7 @@ partial class ProductDescriptionList
         productDescriptionDataGridView = new DataGridView();
         refrescarButton = new Button();
         nuevoButton = new Button();
+        btnModificar = new Button();
         ((System.ComponentModel.ISupportInitialize)productDescriptionDataGridView).BeginInit();
         SuspendLayout();
         // 
@@ -38,7 +39,16 @@ partial class ProductDescriptionList
         productDescriptionDataGridView.RowHeadersWidth = 51;
         productDescriptionDataGridView.Size = new Size(679, 300);
         productDescriptionDataGridView.TabIndex = 0;
-
+        // 
+        // refrescarButton
+        // 
+        refrescarButton.Location = new Point(98, 2);
+        refrescarButton.Name = "refrescarButton";
+        refrescarButton.Size = new Size(94, 22);
+        refrescarButton.TabIndex = 2;
+        refrescarButton.Text = "🔄 Refrescar";
+        refrescarButton.UseVisualStyleBackColor = true;
+        refrescarButton.Click += refrescarButton_Click;
         // 
         // nuevoButton
         // 
@@ -51,22 +61,22 @@ partial class ProductDescriptionList
         nuevoButton.UseVisualStyleBackColor = true;
         nuevoButton.Click += nuevoButton_Click;
         // 
-        // refrescarButton - BOTÓN ADICIONAL PARA RECARGAR
+        // btnModificar
         // 
-        refrescarButton.Location = new Point(112, 3);
-        refrescarButton.Name = "refrescarButton";
-        refrescarButton.Size = new Size(94, 29);
-        refrescarButton.TabIndex = 2;
-        refrescarButton.Text = "🔄 Refrescar";
-        refrescarButton.UseVisualStyleBackColor = true;
-        refrescarButton.Click += refrescarButton_Click;
-
+        btnModificar.Location = new Point(198, 2);
+        btnModificar.Name = "btnModificar";
+        btnModificar.Size = new Size(75, 23);
+        btnModificar.TabIndex = 3;
+        btnModificar.Text = "Modificar";
+        btnModificar.UseVisualStyleBackColor = true;
+        btnModificar.Click += btnModificar_Click;
         // 
         // ProductDescriptionList
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
+        Controls.Add(btnModificar);
         Controls.Add(refrescarButton);
         Controls.Add(nuevoButton);
         Controls.Add(productDescriptionDataGridView);
@@ -79,4 +89,5 @@ partial class ProductDescriptionList
     }
 
     private Button nuevoButton;
+    private Button btnModificar;
 }

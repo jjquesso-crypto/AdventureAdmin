@@ -8,16 +8,59 @@ namespace AdventureAdmin.Ui.Product
     public partial class ProductDescriptionForm : Form
     {
         private readonly ProductDescriptionServices _productDescriptionServices;
+        private readonly ProductDescription? _productDescription;
 
-        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices)
+        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices) : this(productDescriptionServices, null) { }
+        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices, ProductDescription? productDescription)
         {
             InitializeComponent();
             _productDescriptionServices = productDescriptionServices;
+            _productDescription = productDescription;
+
+            if (_productDescription != null)
+                CargarDatos(_productDescription);
+        }
+
+        private void AplicarCampos(ProductDescription e)
+        {
+            e.Description = txtDescription.Text.Trim();
+            e.ModifiedDate = DateTime.Now;
+        }
+
+        private async Task Actualizar()
+        {
+            var entidad = await _productDescriptionServices
+                .Buscar(_productDescription.ProductDescriptionID);
+
+            AplicarCampos(entidad);
+
+            await _productDescriptionServices.Actualizar(entidad);
+        }
+
+        private async Task Insertar()
+        {
+            var productDescription = new ProductDescription
+            {
+                Description = txtDescription.Text.Trim(),
+                Rowguid = Guid.NewGuid(),
+                ModifiedDate = DateTime.Now
+            };
+
+            await _productDescriptionServices.Guardar(productDescription);
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
             errorProvider.Clear();
+
+            if (_productDescription == null)
+                await Insertar();
+            else
+                await Actualizar();
+
+            DialogResult = DialogResult.OK;
+            Close();
+
 
             if (!ValidateForm()) return;
 
@@ -81,6 +124,11 @@ namespace AdventureAdmin.Ui.Product
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void CargarDatos(ProductDescription e)
+        {
+            txtDescription.Text = e.Description;
         }
     }
 }

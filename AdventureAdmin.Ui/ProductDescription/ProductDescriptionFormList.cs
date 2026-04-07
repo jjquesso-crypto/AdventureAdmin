@@ -1,5 +1,7 @@
-﻿using AdventureAdmin.Data.Services;
+﻿using AdventureAdmin.Data.Models;
+using AdventureAdmin.Data.Services;
 using AdventureAdmin.Ui.Services;
+using Aplicada1.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdventureAdmin.Ui.Product;
@@ -45,5 +47,16 @@ public partial class ProductDescriptionList : Form
     private async void refrescarButton_Click(object sender, EventArgs e)
     {
         await RefrescarDatos();
+    }
+
+    private void btnModificar_Click(object sender, EventArgs e)
+    {
+        var entidad = (ProductDescription)productDescriptionDataGridView.CurrentRow.DataBoundItem;
+
+        var form = ActivatorUtilities.CreateInstance<ProductDescriptionForm>(
+            Program.ServiceProvider, entidad);
+
+        if (form.ShowDialog(this) == DialogResult.OK)
+            RefrescarDatos();
     }
 }
