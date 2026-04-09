@@ -1,29 +1,31 @@
-﻿using AdventureAdmin.Data.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using AdventureAdmin.Data.Models;
+using AdventureAdmin.Data.Services;
+using AdventureAdmin.Ui.Services;
+using Aplicada1.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdventureAdmin.Ui.Product;
 
 public partial class ProductDescriptionList : Form
 {
-    private readonly AdventureWorksContext _context;
+    private readonly ProductDescriptionServices _productDescriptionServices;
 
-    public ProductDescriptionList(AdventureWorksContext context)
+    public ProductDescriptionList(ProductDescriptionServices productDescriptionServices)
     {
         InitializeComponent();
-        _context = context;
+        _productDescriptionServices = productDescriptionServices;
     }
 
     private void ProductDescriptionList_Load(object sender, EventArgs e)
     {
-        LoadDataAsync();
+        RefrescarDatos();
     }
 
-    private async Task LoadDataAsync()
+    private async Task RefrescarDatos()
     {
         try
         {
-            var descripciones = await _context.ProductDescriptions.ToListAsync();
+            var descripciones = await _productDescriptionServices.GetList(d => true);
             productDescriptionDataGridView.DataSource = descripciones;
         }
         catch (Exception ex)
@@ -32,17 +34,29 @@ public partial class ProductDescriptionList : Form
         }
     }
 
-    private void nuevoButton_Click(object sender, EventArgs e)
+    private async void nuevoButton_Click(object sender, EventArgs e)
     {
-        var productDescriptionForm = Program.ServiceProvider.GetRequiredService<ProductDescriptionForm>();
-        productDescriptionForm.ShowDialog();
+        var form = Program.ServiceProvider.GetRequiredService<ProductDescriptionForm>();
 
-        // Recargar datos después de cerrar el formulario de nuevo
-        LoadDataAsync();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            await RefrescarDatos();
+        }
     }
 
-    private void refrescarButton_Click(object sender, EventArgs e)
+    private async void refrescarButton_Click(object sender, EventArgs e)
     {
-        LoadDataAsync();
+        await RefrescarDatos();
+    }
+
+    private void btnModificar_Click(object sender, EventArgs e)
+    {
+        var entidad = (ProductDescription)productDescriptionDataGridView.CurrentRow.DataBoundItem;
+
+        var form = ActivatorUtilities.CreateInstance<ProductDescriptionForm>(
+            Program.ServiceProvider, entidad);
+
+        if (form.ShowDialog(this) == DialogResult.OK)
+            RefrescarDatos();
     }
 }

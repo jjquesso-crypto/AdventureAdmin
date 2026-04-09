@@ -81,7 +81,7 @@ static class Program
         //services.AddTransient<CountryRegionService>();
         //services.AddTransient<ShipMethodService>();
         //services.AddTransient<PhoneNumberTypeService>();
-        //services.AddTransient<ProductDescriptionService>();
+        services.AddTransient<ProductDescriptionService>();
         //services.AddTransient<AddressTypeService>();
         //services.AddTransient<BusinessEntityService>();
         //services.AddTransient<LocationService>();

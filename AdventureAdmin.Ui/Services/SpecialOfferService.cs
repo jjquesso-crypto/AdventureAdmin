@@ -9,9 +9,9 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class CultureService(AdventureWorksContext context) : IService<Data.Models.Culture, int>
+public class SpecialOfferService(AdventureWorksContext context) : IService<Data.Models.SpecialOffer, int>
 {
-    public Task<Culture?> Buscar(int id)
+    public Task<SpecialOffer?> Buscar(int id)
     {
         throw new NotImplementedException();
     }
@@ -21,14 +21,14 @@ public class CultureService(AdventureWorksContext context) : IService<Data.Model
         throw new NotImplementedException();
     }
 
-    public async Task<List<Culture>> GetList(Expression<Func<Culture, bool>> criterio)
+    public async Task<List<SpecialOffer>> GetList(Expression<Func<SpecialOffer, bool>> criterio)
     {
-        return await context.Cultures.Where(criterio)
-            .ToListAsync();
+        return await context.SpecialOffers.Where(criterio)
+         .ToListAsync();
 
     }
 
-    public Task<bool> Guardar(Culture entidad)
+    public Task<bool> Guardar(SpecialOffer entidad)
     {
         throw new NotImplementedException();
     }

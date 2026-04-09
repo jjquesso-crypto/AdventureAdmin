@@ -1,7 +1,11 @@
 using AdventureAdmin.Data.Context;
+using AdventureAdmin.Data.Models;
 using Aplicada1.Core;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
@@ -31,6 +35,12 @@ public class ProductCategoryService(
     {
         return await context.ProductCategories
             .Where(criterio)
-            .ToListAsync();
+         .ToListAsync();
+
+    }
+
+    public Task<bool> Guardar(ProductCategory entidad)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AdventureAdmin.Data.Context;
-using AdventureAdmin.Data.Models;
 using Aplicada1.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,9 +8,9 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class CultureService(AdventureWorksContext context) : IService<Data.Models.Culture, int>
+public class LocationService(AdventureWorksContext context) : IService<Data.Models.Location, int>
 {
-    public Task<Culture?> Buscar(int id)
+    public Task<Data.Models.Location?> Buscar(int id)
     {
         throw new NotImplementedException();
     }
@@ -21,14 +20,14 @@ public class CultureService(AdventureWorksContext context) : IService<Data.Model
         throw new NotImplementedException();
     }
 
-    public async Task<List<Culture>> GetList(Expression<Func<Culture, bool>> criterio)
+    public  async Task<List<Data.Models.Location>> GetList(Expression<Func<Data.Models.Location, bool>> criterio)
     {
-        return await context.Cultures.Where(criterio)
-            .ToListAsync();
+        return await context.Locations.Where(criterio)
+         .ToListAsync();
 
     }
 
-    public Task<bool> Guardar(Culture entidad)
+    public Task<bool> Guardar(Data.Models.Location entidad)
     {
         throw new NotImplementedException();
     }

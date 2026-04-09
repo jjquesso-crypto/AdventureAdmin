@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdventureAdmin.Ui.CreditCard
-{
+{ 
     public partial class CreditCardList : Form
     {
         private readonly CreditCardService _creditCardService;

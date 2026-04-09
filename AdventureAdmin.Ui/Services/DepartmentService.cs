@@ -1,6 +1,10 @@
 ﻿using AdventureAdmin.Data.Context;
+using Aplicada1.Core;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
@@ -40,7 +44,7 @@ public class DepartmentService(
         return await context.Departments
             .AsNoTracking()
             .Where(criterio)
-            .ToListAsync();
+         .ToListAsync();
     }
 
     public async Task<bool> Actualizar(Data.Models.Department entidad)

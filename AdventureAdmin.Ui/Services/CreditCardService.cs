@@ -15,11 +15,13 @@ public class CreditCardService(
         await context.CreditCards.AddAsync(nuevaTarjeta);
         var cantidad = await context.SaveChangesAsync();
         return cantidad > 0;
+    
     }
 
     public Task<Data.Models.CreditCard?> Buscar(int id)
     {
         throw new NotImplementedException();
+
     }
 
     public Task<bool> Eliminar(int id)

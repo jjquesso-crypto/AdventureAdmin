@@ -21,6 +21,7 @@ partial class ProductDescriptionList
         productDescriptionDataGridView = new DataGridView();
         refrescarButton = new Button();
         nuevoButton = new Button();
+        btnModificar = new Button();
         ((System.ComponentModel.ISupportInitialize)productDescriptionDataGridView).BeginInit();
         SuspendLayout();
         // 
@@ -31,18 +32,19 @@ partial class ProductDescriptionList
         productDescriptionDataGridView.AllowUserToOrderColumns = true;
         productDescriptionDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         productDescriptionDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        productDescriptionDataGridView.Location = new Point(12, 38);
+        productDescriptionDataGridView.Location = new Point(10, 28);
+        productDescriptionDataGridView.Margin = new Padding(3, 2, 3, 2);
         productDescriptionDataGridView.Name = "productDescriptionDataGridView";
         productDescriptionDataGridView.ReadOnly = true;
         productDescriptionDataGridView.RowHeadersWidth = 51;
-        productDescriptionDataGridView.Size = new Size(831, 465);
+        productDescriptionDataGridView.Size = new Size(679, 300);
         productDescriptionDataGridView.TabIndex = 0;
         // 
         // refrescarButton
         // 
-        refrescarButton.Location = new Point(112, 3);
+        refrescarButton.Location = new Point(98, 2);
         refrescarButton.Name = "refrescarButton";
-        refrescarButton.Size = new Size(94, 29);
+        refrescarButton.Size = new Size(94, 22);
         refrescarButton.TabIndex = 2;
         refrescarButton.Text = "🔄 Refrescar";
         refrescarButton.UseVisualStyleBackColor = true;
@@ -50,22 +52,35 @@ partial class ProductDescriptionList
         // 
         // nuevoButton
         // 
-        nuevoButton.Location = new Point(12, 3);
+        nuevoButton.Location = new Point(10, 2);
+        nuevoButton.Margin = new Padding(3, 2, 3, 2);
         nuevoButton.Name = "nuevoButton";
-        nuevoButton.Size = new Size(94, 29);
+        nuevoButton.Size = new Size(82, 22);
         nuevoButton.TabIndex = 1;
         nuevoButton.Text = "✅ Nuevo";
         nuevoButton.UseVisualStyleBackColor = true;
         nuevoButton.Click += nuevoButton_Click;
         // 
+        // btnModificar
+        // 
+        btnModificar.Location = new Point(198, 2);
+        btnModificar.Name = "btnModificar";
+        btnModificar.Size = new Size(75, 23);
+        btnModificar.TabIndex = 3;
+        btnModificar.Text = "Modificar";
+        btnModificar.UseVisualStyleBackColor = true;
+        btnModificar.Click += btnModificar_Click;
+        // 
         // ProductDescriptionList
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(855, 515);
+        ClientSize = new Size(800, 450);
+        Controls.Add(btnModificar);
         Controls.Add(refrescarButton);
         Controls.Add(nuevoButton);
         Controls.Add(productDescriptionDataGridView);
+        Margin = new Padding(3, 2, 3, 2);
         Name = "ProductDescriptionList";
         Text = "Lista de Descripciones de Producto";
         Load += ProductDescriptionList_Load;
@@ -74,4 +89,5 @@ partial class ProductDescriptionList
     }
 
     private Button nuevoButton;
+    private Button btnModificar;
 }

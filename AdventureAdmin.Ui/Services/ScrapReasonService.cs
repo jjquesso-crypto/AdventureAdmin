@@ -12,22 +12,22 @@ namespace AdventureAdmin.Ui.Services
     {
         Task<Data.Models.ScrapReason?> IService<Data.Models.ScrapReason, int>.Buscar(int id)
         {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
         Task<bool> IService<Data.Models.ScrapReason, int>.Eliminar(int id)
-        {
-            throw new NotImplementedException();
-        }
+    {
+        throw new NotImplementedException();
+    }
 
         public async Task<List<Data.Models.ScrapReason>>GetList(Expression<Func<Data.Models.ScrapReason, bool>> criterio)
-        {
+    {
             return await context.ScrapReasons.Where(criterio).ToListAsync();
 
-        }
+    }
 
         async Task<bool> IService<Data.Models.ScrapReason, int>.Guardar(Data.Models.ScrapReason entidad)
-        {
+    {
             await context.ScrapReasons.AddAsync(entidad);
             var resultado = await context.SaveChangesAsync();
             return resultado > 0;
