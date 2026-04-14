@@ -1,4 +1,4 @@
-using AdventureAdmin.Data.Context;
+using AdventureAdmin.Ui.Tests.Infrastructure;
 using AdventureAdmin.Ui.Services;
 using Microsoft.EntityFrameworkCore;
 using ShipMethodEntity = AdventureAdmin.Data.Models.ShipMethod;
@@ -11,14 +11,14 @@ public class ShipMethodServiceTests
     public async Task Buscar_CuandoExisteMetodoDeEnvio_RetornaEntidad()
     {
         // Arrange
-        var dbName = NewDatabaseName();
-        await using (var seedContext = CreateContext(dbName))
+        var dbName = TestDbContextFactory.NewDatabaseName();
+        await using (var seedContext = TestDbContextFactory.CreateContext(dbName))
         {
             seedContext.ShipMethods.Add(CreateShipMethod(id: 1, name: "Mensajeria Express 24h", shipBase: 12.50m, shipRate: 1.80m));
             await seedContext.SaveChangesAsync();
         }
 
-        await using var context = CreateContext(dbName);
+        await using var context = TestDbContextFactory.CreateContext(dbName);
         var service = new ShipMethodService(context);
 
         // Act
@@ -35,7 +35,7 @@ public class ShipMethodServiceTests
     public async Task Buscar_CuandoNoExisteMetodoDeEnvio_RetornaNull()
     {
         // Arrange
-        await using var context = CreateContext(NewDatabaseName());
+        await using var context = TestDbContextFactory.CreateContext(TestDbContextFactory.NewDatabaseName());
         var service = new ShipMethodService(context);
 
         // Act
@@ -49,8 +49,8 @@ public class ShipMethodServiceTests
     public async Task GetList_CuandoSeFiltraPorCostoBase_RetornaCoincidencias()
     {
         // Arrange
-        var dbName = NewDatabaseName();
-        await using (var seedContext = CreateContext(dbName))
+        var dbName = TestDbContextFactory.NewDatabaseName();
+        await using (var seedContext = TestDbContextFactory.CreateContext(dbName))
         {
             seedContext.ShipMethods.AddRange(
                 CreateShipMethod(id: 1, name: "Entrega Urgente", shipBase: 14.99m, shipRate: 2.40m),
@@ -59,7 +59,7 @@ public class ShipMethodServiceTests
             await seedContext.SaveChangesAsync();
         }
 
-        await using var context = CreateContext(dbName);
+        await using var context = TestDbContextFactory.CreateContext(dbName);
         var service = new ShipMethodService(context);
 
         // Act
@@ -76,7 +76,7 @@ public class ShipMethodServiceTests
     public async Task Insertar_CuandoMetodoEsValido_GeneraDatosYAAlmacena()
     {
         // Arrange
-        await using var context = CreateContext(NewDatabaseName());
+        await using var context = TestDbContextFactory.CreateContext(TestDbContextFactory.NewDatabaseName());
         var service = new ShipMethodService(context);
         var shipMethod = CreateShipMethod(id: 10, name: "Servicio Regional Prioritario", shipBase: 10.49m, shipRate: 1.65m, rowguid: Guid.Empty, modifiedDate: default);
         var beforeInsert = DateTime.Now;
@@ -98,14 +98,14 @@ public class ShipMethodServiceTests
     public async Task Existe_CuandoExisteMetodoDeEnvio_RetornaTrue()
     {
         // Arrange
-        var dbName = NewDatabaseName();
-        await using (var seedContext = CreateContext(dbName))
+        var dbName = TestDbContextFactory.NewDatabaseName();
+        await using (var seedContext = TestDbContextFactory.CreateContext(dbName))
         {
             seedContext.ShipMethods.Add(CreateShipMethod(id: 5, name: "Mensajeria Metropolitana", shipBase: 6.99m, shipRate: 0.95m));
             await seedContext.SaveChangesAsync();
         }
 
-        await using var context = CreateContext(dbName);
+        await using var context = TestDbContextFactory.CreateContext(dbName);
         var service = new ShipMethodService(context);
 
         // Act
@@ -119,7 +119,7 @@ public class ShipMethodServiceTests
     public async Task Existe_CuandoNoExisteMetodoDeEnvio_RetornaFalse()
     {
         // Arrange
-        await using var context = CreateContext(NewDatabaseName());
+        await using var context = TestDbContextFactory.CreateContext(TestDbContextFactory.NewDatabaseName());
         var service = new ShipMethodService(context);
 
         // Act
@@ -133,16 +133,16 @@ public class ShipMethodServiceTests
     public async Task Modificar_CuandoMetodoExiste_ActualizaDatosYFecha()
     {
         // Arrange
-        var dbName = NewDatabaseName();
+        var dbName = TestDbContextFactory.NewDatabaseName();
         var originalRowguid = Guid.NewGuid();
 
-        await using (var seedContext = CreateContext(dbName))
+        await using (var seedContext = TestDbContextFactory.CreateContext(dbName))
         {
             seedContext.ShipMethods.Add(CreateShipMethod(id: 20, name: "Envio Estandar", shipBase: 7.99m, shipRate: 1.10m, rowguid: originalRowguid));
             await seedContext.SaveChangesAsync();
         }
 
-        await using var context = CreateContext(dbName);
+        await using var context = TestDbContextFactory.CreateContext(dbName);
         var service = new ShipMethodService(context);
         var updated = CreateShipMethod(id: 20, name: "Envio Estandar Mejorado", shipBase: 9.49m, shipRate: 1.35m, rowguid: originalRowguid, modifiedDate: default);
         var beforeUpdate = DateTime.Now;
@@ -163,7 +163,7 @@ public class ShipMethodServiceTests
     public async Task Guardar_CuandoMetodoNoExiste_InsertaYRetornaTrue()
     {
         // Arrange
-        await using var context = CreateContext(NewDatabaseName());
+        await using var context = TestDbContextFactory.CreateContext(TestDbContextFactory.NewDatabaseName());
         var service = new ShipMethodService(context);
         var newShipMethod = CreateShipMethod(id: 30, name: "Entrega Programada 48h", shipBase: 11.25m, shipRate: 1.55m, rowguid: Guid.Empty, modifiedDate: default);
 
@@ -183,16 +183,16 @@ public class ShipMethodServiceTests
     public async Task Guardar_CuandoMetodoExiste_ModificaYRetornaTrue()
     {
         // Arrange
-        var dbName = NewDatabaseName();
+        var dbName = TestDbContextFactory.NewDatabaseName();
         var rowguid = Guid.NewGuid();
 
-        await using (var seedContext = CreateContext(dbName))
+        await using (var seedContext = TestDbContextFactory.CreateContext(dbName))
         {
             seedContext.ShipMethods.Add(CreateShipMethod(id: 40, name: "Envio Internacional", shipBase: 25.99m, shipRate: 4.20m, rowguid: rowguid));
             await seedContext.SaveChangesAsync();
         }
 
-        await using var context = CreateContext(dbName);
+        await using var context = TestDbContextFactory.CreateContext(dbName);
         var service = new ShipMethodService(context);
         var updated = CreateShipMethod(id: 40, name: "Envio Internacional Express", shipBase: 32.50m, shipRate: 5.10m, rowguid: rowguid, modifiedDate: default);
 
@@ -211,22 +211,11 @@ public class ShipMethodServiceTests
     public async Task Eliminar_CuandoNoEstaImplementado_LanzaNotImplementedException()
     {
         // Arrange
-        await using var context = CreateContext(NewDatabaseName());
+        await using var context = TestDbContextFactory.CreateContext(TestDbContextFactory.NewDatabaseName());
         var service = new ShipMethodService(context);
 
         // Act + Assert
         await Assert.ThrowsAsync<NotImplementedException>(() => service.Eliminar(1));
-    }
-
-    private static string NewDatabaseName() => $"ShipMethodServiceTests_{Guid.NewGuid()}";
-
-    private static TestAdventureWorksContext CreateContext(string databaseName)
-    {
-        var options = new DbContextOptionsBuilder<AdventureWorksContext>()
-            .UseInMemoryDatabase(databaseName)
-            .Options;
-
-        return new TestAdventureWorksContext(options);
     }
 
     private static ShipMethodEntity CreateShipMethod(
@@ -246,14 +235,5 @@ public class ShipMethodServiceTests
             Rowguid = rowguid ?? Guid.NewGuid(),
             ModifiedDate = modifiedDate ?? DateTime.Now
         };
-    }
-
-    private sealed class TestAdventureWorksContext(DbContextOptions<AdventureWorksContext> options)
-        : AdventureWorksContext(options)
-    {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Intentionally empty: tests provide InMemory provider through options.
-        }
     }
 }
