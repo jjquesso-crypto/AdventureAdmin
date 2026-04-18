@@ -11,7 +11,7 @@ namespace AdventureAdmin.Ui.Services;
 
 public class ContactTypeService(AdventureWorksContext context) : IService<Data.Models.ContactType, int>
 {
-    public Task<ContactType?> Buscar(int id)
+    public Task<Data.Models.ContactType?> Buscar(int id)
     {
         throw new NotImplementedException();
     }
@@ -21,7 +21,7 @@ public class ContactTypeService(AdventureWorksContext context) : IService<Data.M
         throw new NotImplementedException();
     }
 
-    public async Task<List<ContactType>> GetList(Expression<Func<ContactType, bool>> criterio)
+    public async Task<List<Data.Models.ContactType>> GetList(Expression<Func<Data.Models.ContactType, bool>> criterio)
     {
         return await context.ContactTypes
     .Where(criterio)
@@ -29,7 +29,7 @@ public class ContactTypeService(AdventureWorksContext context) : IService<Data.M
 
     }
 
-    public Task<bool> Guardar(ContactType entidad)
+    public Task<bool> Guardar(Data.Models.ContactType entidad)
     {
         throw new NotImplementedException();
     }

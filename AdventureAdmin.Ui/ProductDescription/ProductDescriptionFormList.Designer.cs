@@ -37,12 +37,12 @@ partial class ProductDescriptionList
         productDescriptionDataGridView.Name = "productDescriptionDataGridView";
         productDescriptionDataGridView.ReadOnly = true;
         productDescriptionDataGridView.RowHeadersWidth = 51;
-        productDescriptionDataGridView.Size = new Size(679, 300);
+        productDescriptionDataGridView.Size = new Size(688, 368);
         productDescriptionDataGridView.TabIndex = 0;
         // 
         // refrescarButton
         // 
-        refrescarButton.Location = new Point(98, 2);
+        refrescarButton.Location = new Point(107, 3);
         refrescarButton.Name = "refrescarButton";
         refrescarButton.Size = new Size(94, 22);
         refrescarButton.TabIndex = 2;
@@ -63,7 +63,7 @@ partial class ProductDescriptionList
         // 
         // btnModificar
         // 
-        btnModificar.Location = new Point(198, 2);
+        btnModificar.Location = new Point(217, 2);
         btnModificar.Name = "btnModificar";
         btnModificar.Size = new Size(75, 23);
         btnModificar.TabIndex = 3;
@@ -73,9 +73,8 @@ partial class ProductDescriptionList
         // 
         // ProductDescriptionList
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
-        AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        AutoScaleMode = AutoScaleMode.None;
+        ClientSize = new Size(900, 450);
         Controls.Add(btnModificar);
         Controls.Add(refrescarButton);
         Controls.Add(nuevoButton);

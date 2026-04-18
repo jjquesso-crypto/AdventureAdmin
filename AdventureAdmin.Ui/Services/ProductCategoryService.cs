@@ -38,9 +38,4 @@ public class ProductCategoryService(
          .ToListAsync();
 
     }
-
-    public Task<bool> Guardar(ProductCategory entidad)
-    {
-        throw new NotImplementedException();
-    }
 }

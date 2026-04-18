@@ -25,8 +25,8 @@ partial class ProductDescriptionForm
         components = new System.ComponentModel.Container();
         errorProvider = new ErrorProvider(components);
         layout = new TableLayoutPanel();
-        lblDescription = new Label();
         txtDescription = new TextBox();
+        lblDescription = new Label();
         btnSave = new Button();
         btnCancel = new Button();
         panelButtons = new Panel();
@@ -34,9 +34,13 @@ partial class ProductDescriptionForm
         layout.SuspendLayout();
         panelButtons.SuspendLayout();
         SuspendLayout();
-         
+        // 
+        // errorProvider
+        // 
         errorProvider.ContainerControl = this;
-        
+        // 
+        // layout
+        // 
         layout.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         layout.ColumnCount = 2;
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 131F));
@@ -50,7 +54,20 @@ partial class ProductDescriptionForm
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
         layout.Size = new Size(575, 164);
         layout.TabIndex = 0;
-        
+        // 
+        // txtDescription
+        // 
+        txtDescription.Location = new Point(134, 8);
+        txtDescription.Margin = new Padding(3, 8, 3, 2);
+        txtDescription.MaxLength = 400;
+        txtDescription.Multiline = true;
+        txtDescription.Name = "txtDescription";
+        txtDescription.ScrollBars = ScrollBars.Vertical;
+        txtDescription.Size = new Size(438, 154);
+        txtDescription.TabIndex = 1;
+        // 
+        // lblDescription
+        // 
         lblDescription.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         lblDescription.AutoSize = true;
         lblDescription.Location = new Point(56, 8);
@@ -60,16 +77,9 @@ partial class ProductDescriptionForm
         lblDescription.TabIndex = 0;
         lblDescription.Text = "Descripción:";
         lblDescription.TextAlign = ContentAlignment.MiddleRight;
-         
-        txtDescription.Location = new Point(134, 8);
-        txtDescription.Margin = new Padding(3, 8, 3, 2);
-        txtDescription.MaxLength = 400;
-        txtDescription.Multiline = true;
-        txtDescription.Name = "txtDescription";
-        txtDescription.ScrollBars = ScrollBars.Vertical;
-        txtDescription.Size = new Size(438, 154);
-        txtDescription.TabIndex = 1;
-        
+        // 
+        // btnSave
+        // 
         btnSave.Location = new Point(2, 2);
         btnSave.Margin = new Padding(3, 2, 3, 2);
         btnSave.Name = "btnSave";
@@ -78,7 +88,9 @@ partial class ProductDescriptionForm
         btnSave.Text = "💾Guardar";
         btnSave.UseVisualStyleBackColor = true;
         btnSave.Click += btnSave_Click;
-        
+        // 
+        // btnCancel
+        // 
         btnCancel.Location = new Point(99, 2);
         btnCancel.Margin = new Padding(3, 2, 3, 2);
         btnCancel.Name = "btnCancel";
@@ -87,7 +99,9 @@ partial class ProductDescriptionForm
         btnCancel.Text = "❌ Cancelar";
         btnCancel.UseVisualStyleBackColor = true;
         btnCancel.Click += btnCancel_Click;
-        
+        // 
+        // panelButtons
+        // 
         panelButtons.Controls.Add(btnSave);
         panelButtons.Controls.Add(btnCancel);
         panelButtons.Location = new Point(180, 8);
@@ -95,20 +109,21 @@ partial class ProductDescriptionForm
         panelButtons.Name = "panelButtons";
         panelButtons.Size = new Size(213, 28);
         panelButtons.TabIndex = 1;
-        
+        // 
+        // ProductDescriptionForm
+        // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(596, 239);
         Controls.Add(layout);
         Controls.Add(panelButtons);
-        FormBorderStyle = FormBorderStyle.FixedDialog;                                                                                                                                                           
+        FormBorderStyle = FormBorderStyle.FixedDialog;
         Margin = new Padding(3, 2, 3, 2);
         MaximizeBox = false;
         MinimizeBox = false;
         Name = "ProductDescriptionForm";
         StartPosition = FormStartPosition.CenterParent;
         Text = "Agregar Descripción de Producto";
-        //Load += ProductDescriptionForm_Load;
         ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
         layout.ResumeLayout(false);
         layout.PerformLayout();

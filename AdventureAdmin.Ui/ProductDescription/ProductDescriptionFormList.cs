@@ -8,12 +8,12 @@ namespace AdventureAdmin.Ui.Product;
 
 public partial class ProductDescriptionList : Form
 {
-    private readonly ProductDescriptionServices _productDescriptionServices;
+    private readonly Services.ProductDescriptionService _productDescriptionService;
 
-    public ProductDescriptionList(ProductDescriptionServices productDescriptionServices)
+    public ProductDescriptionList(Services.ProductDescriptionService productDescriptionService)
     {
         InitializeComponent();
-        _productDescriptionServices = productDescriptionServices;
+        _productDescriptionService = productDescriptionService;
     }
 
     private void ProductDescriptionList_Load(object sender, EventArgs e)
@@ -25,7 +25,7 @@ public partial class ProductDescriptionList : Form
     {
         try
         {
-            var descripciones = await _productDescriptionServices.GetList(d => true);
+            var descripciones = await _productDescriptionService.GetList(d => true);
             productDescriptionDataGridView.DataSource = descripciones;
         }
         catch (Exception ex)
@@ -49,8 +49,14 @@ public partial class ProductDescriptionList : Form
         await RefrescarDatos();
     }
 
-    private void btnModificar_Click(object sender, EventArgs e)
+    private async void btnModificar_Click(object sender, EventArgs e)
     {
+        if (productDescriptionDataGridView.CurrentRow == null)
+        {
+            MessageBox.Show("Seleccione un registro");
+            return;
+        }
+
         var entidad = (ProductDescription)productDescriptionDataGridView.CurrentRow.DataBoundItem;
 
         var form = ActivatorUtilities.CreateInstance<ProductDescriptionForm>(

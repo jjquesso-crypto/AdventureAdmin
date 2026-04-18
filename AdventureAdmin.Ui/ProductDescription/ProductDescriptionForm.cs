@@ -7,15 +7,15 @@ namespace AdventureAdmin.Ui.Product
 {
     public partial class ProductDescriptionForm : Form
     {
-        private readonly ProductDescriptionServices _productDescriptionServices;
+        private readonly ProductDescriptionService _productDescriptionService;
         private readonly ProductDescription? _productDescription;
 
-        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices) : this(productDescriptionServices, null) { }
+        public ProductDescriptionForm(ProductDescriptionService productDescriptionService) : this(productDescriptionService, null) { }
 
-        public ProductDescriptionForm(ProductDescriptionServices productDescriptionServices, ProductDescription? productDescription)
+        public ProductDescriptionForm(ProductDescriptionService productDescriptionService, ProductDescription? productDescription)
         {
             InitializeComponent();
-            _productDescriptionServices = productDescriptionServices;
+            _productDescriptionService = productDescriptionService;
             _productDescription = productDescription;
 
             if (_productDescription != null)
@@ -30,13 +30,13 @@ namespace AdventureAdmin.Ui.Product
 
         private async Task Actualizar()
         {
-            var entidad = await _productDescriptionServices
+            var entidad = await _productDescriptionService
                 .Buscar(_productDescription.ProductDescriptionId);
 
             if (entidad != null)
             {
                 AplicarCampos(entidad);
-                await _productDescriptionServices.Modificar(entidad);
+                await _productDescriptionService.Modificar(entidad);
             }
         }
 
@@ -49,7 +49,7 @@ namespace AdventureAdmin.Ui.Product
                 ModifiedDate = DateTime.Now
             };
 
-            await _productDescriptionServices.Guardar(productDescription);
+            await _productDescriptionService.Guardar(productDescription);
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
