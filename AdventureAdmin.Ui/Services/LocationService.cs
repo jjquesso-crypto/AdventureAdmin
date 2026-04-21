@@ -8,27 +8,49 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class LocationService(AdventureWorksContext context) : IService<Data.Models.Location, int>
+public class LocationService(
+    AdventureWorksContext context
+    ) : Aplicada1.Core.IService<Data.Models.Location, int>
 {
-    public Task<Data.Models.Location?> Buscar(int id)
+    public async Task<Data.Models.Location?> Buscar(int id)
     {
-        throw new NotImplementedException();
+        return await context.Locations
+            .FirstOrDefaultAsync(x => x.LocationId == id);
     }
 
-    public Task<bool> Eliminar(int id)
+    public async Task<bool> Eliminar(int id)
     {
-        throw new NotImplementedException();
+        var location = await context.Locations
+            .FirstOrDefaultAsync(l => l.LocationId == id);
+        
+        if (location == null)
+            return false;
+
+        context.Locations.Remove(location);
+        var cantidad = await context.SaveChangesAsync();
+
+        return cantidad > 0;
     }
 
-    public  async Task<List<Data.Models.Location>> GetList(Expression<Func<Data.Models.Location, bool>> criterio)
+    public async Task<List<Data.Models.Location>> GetList(Expression<Func<Data.Models.Location, bool>> criterio)
     {
-        return await context.Locations.Where(criterio)
-         .ToListAsync();
-
+        return await context.Locations
+          
+            .Where(criterio)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
-    public Task<bool> Guardar(Data.Models.Location entidad)
+    public async Task<bool> Guardar(Data.Models.Location entidad)
     {
-        throw new NotImplementedException();
+        await context.Locations.AddAsync(entidad);
+        var cantidad = await context.SaveChangesAsync();
+        return cantidad > 0;
+    }
+    public async Task<bool> Modificar(Data.Models.Location entidad)
+    {
+        entidad.ModifiedDate = DateTime.Now;
+        context.Entry(entidad).State = EntityState.Modified;
+        return await context.SaveChangesAsync() > 0;
     }
 }

@@ -9,7 +9,9 @@ using System.Text;
 
 namespace AdventureAdmin.Ui.Services;
 
-public class BusinessEntityService(AdventureWorksContext context) : IService<Data.Models.BusinessEntity, int>
+public class BusinessEntityService(
+    AdventureWorksContext context
+) : IService<Data.Models.BusinessEntity, int>
 {
     public Task<BusinessEntity?> Buscar(int id)
     {
@@ -24,8 +26,8 @@ public class BusinessEntityService(AdventureWorksContext context) : IService<Dat
     public async Task<List<BusinessEntity>> GetList(Expression<Func<BusinessEntity, bool>> criterio)
     {
         return await context.BusinessEntities
-         .Where(criterio)
-         .ToListAsync();
+            .Where(criterio)
+            .ToListAsync();
 
     }
 
